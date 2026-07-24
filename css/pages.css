@@ -1,6 +1,7 @@
 /* ============================
    E-Consulting - Pages Stylesheet
    Styles for Service Pages
+   Warm & Modern Design
    ============================ */
 
 /* Page Hero */
@@ -26,7 +27,17 @@
 .page-hero-bg {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(0, 102, 204, 0.9) 0%, rgba(26, 26, 46, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.9) 0%, rgba(30, 41, 59, 0.95) 100%);
+}
+
+.page-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #F97316 0%, #FB923C 50%, #F97316 100%);
 }
 
 .page-hero-content {
@@ -50,7 +61,7 @@
 }
 
 .breadcrumb a:hover {
-    color: var(--white);
+    color: #FB923C;
 }
 
 .breadcrumb i {
@@ -60,17 +71,20 @@
 .page-hero h1 {
     color: var(--white);
     margin-bottom: var(--space-md);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
 }
 
 .page-hero-subtitle {
     font-size: var(--font-size-xl);
     color: rgba(255, 255, 255, 0.9);
     max-width: 600px;
+    line-height: 1.6;
 }
 
 /* Intro Section */
 .intro-section {
     padding: var(--space-4xl) 0;
+    background: linear-gradient(180deg, #FFFBF5 0%, #ffffff 100%);
 }
 
 .intro-grid {
