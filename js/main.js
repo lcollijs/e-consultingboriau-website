@@ -213,22 +213,33 @@ function initContactForm() {
     if (!form) return;
 
     form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
         // Get form data
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
 
-        // Basic validation - prevent submit if invalid
+        // Basic validation
         if (!validateForm(data)) {
-            e.preventDefault();
             return;
         }
 
-        // Show loading state
-        const submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn.textContent = 'Versturen...';
-        submitBtn.disabled = true;
+        // Build email body
+        const subject = encodeURIComponent('Contactaanvraag via website - ' + (data.service || 'Algemeen'));
+        const body = encodeURIComponent(
+            'Naam: ' + data.name + '\n' +
+            'Telefoon: ' + data.phone + '\n' +
+            'E-mail: ' + data.email + '\n' +
+            'Dienst: ' + (data.service || 'Niet opgegeven') + '\n\n' +
+            'Bericht:\n' + data.message
+        );
         
-        // Let the form submit normally to FormSubmit.co
+        // Open email client
+        window.location.href = 'mailto:dimitri.boriau@gmail.com?subject=' + subject + '&body=' + body;
+        
+        // Show success message
+        showNotification('Je e-mailprogramma wordt geopend. Klik op verzenden om het bericht te versturen.', 'success');
+        form.reset();
     });
 }
 
