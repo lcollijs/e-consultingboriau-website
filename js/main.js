@@ -212,7 +212,7 @@ function initContactForm() {
     
     if (!form) return;
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
         // Get form data
@@ -228,16 +228,30 @@ function initContactForm() {
         submitBtn.textContent = 'Versturen...';
         submitBtn.disabled = true;
 
-        // Simulate form submission (replace with actual submission logic)
-        setTimeout(() => {
-            // Success message
-            showNotification('Bedankt voor uw bericht! We nemen zo snel mogelijk contact met u op.', 'success');
-            form.reset();
-            
+        try {
+            // Submit to Formspree
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                // Success message
+                showNotification('Bedankt voor uw bericht! We nemen zo snel mogelijk contact met u op.', 'success');
+                form.reset();
+            } else {
+                throw new Error('Verzenden mislukt');
+            }
+        } catch (error) {
+            showNotification('Er ging iets mis. Probeer het opnieuw of bel ons rechtstreeks.', 'error');
+        } finally {
             // Reset button
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
-        }, 1500);
+        }
     });
 }
 
